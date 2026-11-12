@@ -50,8 +50,8 @@ score (1 - Hamming loss).
   cross-validation on the training set only.
 - SMOTE is applied inside the cross-validation folds via `imblearn.Pipeline`,
   never before the split and never to the test set.
-- Per-label confusion matrices, macro-averaged precision/recall/F1 and the
-  micro-averaged one-versus-rest ROC over all (label, class) binary problems
+- Per-label confusion matrices, macro-averaged precision/recall/F1 and a
+  one-versus-rest ROC averaged over all (label, class) binary problems
   (AUC = 0.9992) are reported in §1(b)vi.
 - Extra practice 1(b)v (classifier chains) is included: chaining the three labels
   gives 0.9240 exact match against 0.9176 for independent binary relevance.
