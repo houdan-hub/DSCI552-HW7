@@ -46,8 +46,8 @@ score (1 - Hamming loss).
 | L1-SVM + SMOTE (inside folds) | 0.8606 | 0.2089 | 0.9304 | 0.9152 | 0.9171 | 0.9588 |
 | Classifier chain (L1) | 0.9240 | 0.1927 | 0.9358 | 0.9393 | 0.9347 | 0.9333 |
 
-- Hyperparameters ($C$, $\sigma$ / $\gamma$) are tuned by 10-fold stratified
-  cross-validation on the training set only.
+- Hyperparameters ($C$, $\sigma$ / $\gamma$) are tuned by 10-fold cross-validation
+  on the training set only.
 - SMOTE is applied inside the cross-validation folds via `imblearn.Pipeline`,
   never before the split and never to the test set.
 - Per-label confusion matrices, macro-averaged precision/recall/F1 and a
@@ -59,8 +59,8 @@ score (1 - Hamming loss).
 ## Clustering (part 2)
 
 k-means on the standardized 22 MFCCs, Monte-Carlo over 50 repetitions, $k$
-chosen by silhouette (Calinski-Harabasz is reported for comparison but decreases
-monotonically and always returns $k=2$):
+chosen by silhouette (Calinski-Harabasz is reported for comparison, but it has no
+interior maximum on this data and so always returns $k=2$):
 
 - chosen $k$: mean 3.9, sd 0.9, mode 4, range 3-6
 - Hamming distance of cluster-majority triplets: **0.7401 ± 0.1001** over 50 runs
