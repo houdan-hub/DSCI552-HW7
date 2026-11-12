@@ -24,13 +24,16 @@ written answer to ISLR exercise 12.6.2.
 
 ```bash
 pip install -r requirements.txt
-jupyter nbconvert --to notebook --execute Hou_Tianbo_HW7.ipynb
+jupyter execute Hou_Tianbo_HW7.ipynb
 ```
 
-Everything uses relative paths under the repo root, so a fresh clone runs as is.
-Full execution takes roughly ten minutes on a laptop; the SMOTE pipelines in
-1(b)iv and the 50 k-means repetitions in part 2 are the slowest cells. All
-random seeds are fixed, so the numbers below reproduce exactly.
+`jupyter execute` runs the notebook headlessly through `nbclient` and writes the
+outputs back in place — that is how the committed outputs were produced. Opening
+the notebook in any Jupyter front end and choosing "Restart & Run All" does the
+same thing. Everything uses relative paths under the repo root, so a fresh clone
+runs as is. Full execution takes roughly ten minutes on a laptop; the SMOTE
+pipelines in 1(b)iv and the 50 k-means repetitions in part 2 are the slowest
+cells. All random seeds are fixed, so the numbers below reproduce exactly.
 
 ## Main results (test set, 2,159 syllables held out)
 
@@ -50,11 +53,20 @@ score (1 - Hamming loss).
   on the training set only.
 - SMOTE is applied inside the cross-validation folds via `imblearn.Pipeline`,
   never before the split and never to the test set.
-- Per-label confusion matrices, macro-averaged precision/recall/F1 and a
-  one-versus-rest ROC averaged over all (label, class) binary problems
-  (AUC = 0.9992) are reported in §1(b)vi.
+- Per-label confusion matrices, macro-averaged precision/recall/F1 for all five
+  models, and a one-versus-rest ROC averaged over every (label, class) binary
+  problem for the four models that expose per-class scores (AUC 0.9836 to 0.9992)
+  are reported in §1(b)vi.
 - Extra practice 1(b)v (classifier chains) is included: chaining the three labels
-  gives 0.9240 exact match against 0.9176 for independent binary relevance.
+  gives 0.9240 exact match against 0.9176 for independent binary relevance. The
+  gain is consistency, not accuracy — Species accuracy falls from 0.9606 to 0.9333
+  while the number of impossible (family, genus, species) triplets drops from 110
+  to 32 of 2,159.
+- The metrics disagree about SMOTE, which is worth knowing before quoting one of
+  them: exact match prefers plain $L_1$ (0.9176 against 0.8606), macro F1 prefers
+  SMOTE (0.8300 against 0.8202), and so does the averaged AUC (0.9849 against
+  0.9836). Exact match is dominated by the majority classes; the macro scores give
+  the 68-row classes the same weight as the 4,420-row ones.
 
 ## Clustering (part 2)
 
